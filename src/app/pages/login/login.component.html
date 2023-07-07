@@ -1,0 +1,17 @@
+<h1>GeoMatch</h1>
+
+<app-card>
+  <div header>Log In</div>
+  <div byline>Please login using the credentials that were provided in the login email.</div>
+
+  <div cardbody>
+    <ircc-cl-lib-input [config]="inputConfig"></ircc-cl-lib-input>
+    <ircc-cl-lib-input [config]="passConfig"></ircc-cl-lib-input>
+  </div>
+
+  <div cardfooter>
+    <ircc-cl-lib-button [config]="buttonConfig" (btnAction)="detectClick($event)">Continue</ircc-cl-lib-button>
+    <a href="mailto:contact@ircc.gc.ca">Need Help? Contact Admin</a>
+  </div>
+
+</app-card>

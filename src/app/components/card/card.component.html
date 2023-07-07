@@ -1,0 +1,17 @@
+<div class="card">
+
+    <div class="card-header">
+        <!-- prettier-ignore -->
+        <h1 class="header"><ng-content select="[header]"></ng-content></h1>
+        <h2 class="subheader h2"><ng-content select="[subheader]"></ng-content></h2>
+        <h2 class="byline h5"><ng-content select="[byline]"></ng-content></h2>
+    </div>
+    <div class="card-body">
+        <ng-content select="[cardbody]"></ng-content>
+    </div>
+
+    <div class="card-footer">
+        <ng-content select="[cardfooter]"></ng-content>
+    </div>
+
+</div>

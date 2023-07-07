@@ -1,0 +1,138 @@
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import * as i0 from "@angular/core";
+import * as i1 from "@angular/common";
+import * as i2 from "@angular/router";
+import * as i3 from "../../shared/button/button.component";
+import * as i4 from "../../shared/icon-button/icon-button.component";
+import * as i5 from "@ngx-translate/core";
+export var BannerType;
+(function (BannerType) {
+    BannerType[""] = "";
+    BannerType["generic"] = "generic";
+    BannerType["info"] = "info";
+    BannerType["critical"] = "critical";
+    BannerType["success"] = "success";
+    BannerType["warning"] = "warning";
+})(BannerType || (BannerType = {}));
+export var BannerSize;
+(function (BannerSize) {
+    BannerSize["large"] = "large";
+    BannerSize["small"] = "small";
+})(BannerSize || (BannerSize = {}));
+export var CTAType;
+(function (CTAType) {
+    CTAType["link"] = "link";
+    CTAType["button"] = "button";
+})(CTAType || (CTAType = {}));
+export class BannerComponent {
+    constructor() {
+        this.lineVisible = true;
+        this.textId = '';
+        this.config = {
+            id: ''
+        };
+        this.btnEvent = new EventEmitter();
+        this.iconConfig = {
+            id: '',
+            category: 'custom',
+            icon: {
+                class: 'fa-solid fa-xmark',
+                color: 'var(--text-primary)'
+            }
+        };
+    }
+    eventHandler(emitValue) {
+        console.log(emitValue);
+        if (this.config?.id) {
+            let banner = document.getElementById(this.config?.id);
+            banner?.classList.add('bannerDismissed');
+            setTimeout(function () {
+                banner?.classList.add('noDisplay');
+                banner?.classList.remove('bannerDismissed');
+            }, 700);
+            this.btnEvent?.emit(this.config.id);
+            banner?.classList.remove('noDisplay');
+        }
+    }
+    toggleLine() {
+        let containerHeight = document.getElementById(this.textId)?.offsetHeight;
+        let el = document.querySelector(`#${this.config?.id} .banner-line`);
+        let ctas = document.querySelector(`#${this.config?.id} .banner-ctas`);
+        if ((containerHeight && el && containerHeight > 35) ||
+            (el && containerHeight && containerHeight > 23 && ctas)) {
+            el.style.display = 'block';
+        }
+        else if (el) {
+            el.style.display = 'none';
+        }
+    }
+    ngOnInit() {
+        //set config from individual options, if present
+        if (this.id)
+            this.config.id = this.id;
+        if (this.title)
+            this.config.title = this.title;
+        if (this.content)
+            this.config.content = this.content;
+        if (this.type)
+            this.config.type = this.type;
+        if (this.rounded)
+            this.config.rounded = this.rounded;
+        if (this.dismissible)
+            this.config.dismissible = this.dismissible;
+        if (this.cta)
+            this.config.cta = this.cta;
+        if (this.size)
+            this.config.size = this.size;
+        if (this.ariaDissmissible)
+            this.config.ariaDissmissible = this.ariaDissmissible;
+        this.iconConfig.id = this.config?.id + '_closeBtn';
+        this.textId = this.config?.id + '_text';
+        if (this.config?.cta) {
+            this.config?.cta.forEach((item) => {
+                if (item.ariaLabel && item.btnConfig)
+                    item.btnConfig.ariaLabel = item.ariaLabel;
+            });
+        }
+        if (!this.config.ariaDissmissible || this.config.ariaDissmissible === '') {
+            if (this.config.dismissible) {
+                this.config.ariaDissmissible = 'close';
+            }
+        }
+    }
+    ngAfterViewInit() {
+        this.toggleLine();
+    }
+    ngAfterViewChecked() {
+        this.toggleLine();
+    }
+}
+BannerComponent.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.2.12", ngImport: i0, type: BannerComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
+BannerComponent.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "14.2.12", type: BannerComponent, selector: "ircc-cl-lib-banner", inputs: { config: "config", id: "id", title: "title", content: "content", type: "type", rounded: "rounded", dismissible: "dismissible", cta: "cta", size: "size", ariaDissmissible: "ariaDissmissible" }, outputs: { btnEvent: "btnEvent" }, ngImport: i0, template: "<div\n  (window:resize)=\"toggleLine()\"\n  class=\"banner-component\"\n  class=\"{{ config?.size }}\"\n  id=\"{{ config?.id }}\"\n  [ngClass]=\"{\n    rounded: config?.rounded,\n    information: config?.type === 'info',\n    success: config?.type === 'success',\n    warning: config?.type === 'warning',\n    critical: config?.type === 'critical'\n  }\"\n>\n  <div class=\"banner-container\">\n    <div\n      class=\"banner-left\"\n      *ngIf=\"config?.type !== 'generic' && config?.type\"\n    >\n      <ng-container [ngSwitch]=\"config?.type\">\n        <div *ngSwitchCase=\"'critical'\">\n          <i class=\"fa-circle-exclamation fa-light banner-icon\"></i>\n        </div>\n        <div *ngSwitchCase=\"'success'\">\n          <i class=\"fa-circle-check fa-light banner-icon\"></i>\n        </div>\n        <div *ngSwitchCase=\"'info'\">\n          <i class=\"fa-circle-info fa-light banner-icon\"></i>\n        </div>\n        <div *ngSwitchCase=\"'warning'\">\n          <i class=\"fa-triangle-exclamation fa-light banner-icon\"></i>\n        </div>\n      </ng-container>\n      <div\n        class=\"banner-line\"\n        [ngClass]=\"{ hidden: !lineVisible }\"\n      ></div>\n    </div>\n    <div class=\"banner-right\">\n      <div class=\"banner-body\">\n        <div\n          class=\"banner-text\"\n          id=\"{{ textId }}\"\n        >\n          <div\n            class=\"banner-title h6 emphasis\"\n            *ngIf=\"config?.title\"\n          >\n            {{ config?.title || '' | translate }}\n          </div>\n          <div\n            class=\"banner-content\"\n            [innerHTML]=\"config?.content || '' | translate\"\n            *ngIf=\"config?.content\"\n          ></div>\n        </div>\n      </div>\n      <div\n        class=\"banner-ctas\"\n        *ngIf=\"config?.cta\"\n      >\n        <ng-container *ngFor=\"let cta of config?.cta; let index = index\">\n          <ircc-cl-lib-button\n            *ngIf=\"cta?.type === 'button'\"\n            [id]=\"'cta_' + index\"\n            [category]=\"cta?.btnConfig?.category\"\n            [color]=\"cta?.btnConfig?.color\"\n            [ariaLabel]=\"cta?.btnConfig?.ariaLabel\"\n            [disabled]=\"cta?.btnConfig?.disabled\"\n            [icon]=\"cta?.btnConfig?.icon\"\n            [iconDirection]=\"cta?.btnConfig?.iconDirection\"\n            >{{ cta.text | translate }}</ircc-cl-lib-button\n          >\n          <a\n            class=\"cta-link\"\n            *ngIf=\"cta?.type === 'link'\"\n            [routerLink]=\"cta?.linkConfig | translate\"\n            [attr.aria-label]=\"cta?.ariaLabel\"\n            >{{ cta.text | translate }}</a\n          >\n        </ng-container>\n      </div>\n    </div>\n  </div>\n  <div class=\"banner-btn\">\n    <ircc-cl-lib-icon-button\n      [ariaLabel]=\"config?.ariaDissmissible || '' | translate\"\n      size=\"extraSmall\"\n      class=\"banner-close\"\n      *ngIf=\"config?.dismissible\"\n      [config]=\"iconConfig\"\n      (clickEvent)=\"eventHandler($event)\"\n    ></ircc-cl-lib-icon-button>\n  </div>\n</div>\n", dependencies: [{ kind: "directive", type: i1.NgClass, selector: "[ngClass]", inputs: ["class", "ngClass"] }, { kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i1.NgSwitch, selector: "[ngSwitch]", inputs: ["ngSwitch"] }, { kind: "directive", type: i1.NgSwitchCase, selector: "[ngSwitchCase]", inputs: ["ngSwitchCase"] }, { kind: "directive", type: i2.RouterLinkWithHref, selector: "a[routerLink],area[routerLink]", inputs: ["target", "queryParams", "fragment", "queryParamsHandling", "state", "relativeTo", "preserveFragment", "skipLocationChange", "replaceUrl", "routerLink"] }, { kind: "component", type: i3.ButtonComponent, selector: "ircc-cl-lib-button", inputs: ["config", "id", "category", "size", "color", "ariaLabel", "disabled", "icon", "iconDirection", "tabIndex"], outputs: ["btnAction"] }, { kind: "component", type: i4.IconButtonComponent, selector: "ircc-cl-lib-icon-button", inputs: ["config", "id", "category", "size", "ariaLabel", "disabled", "icon"], outputs: ["clickEvent"] }, { kind: "pipe", type: i5.TranslatePipe, name: "translate" }], preserveWhitespaces: true });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.2.12", ngImport: i0, type: BannerComponent, decorators: [{
+            type: Component,
+            args: [{ selector: 'ircc-cl-lib-banner', template: "<div\n  (window:resize)=\"toggleLine()\"\n  class=\"banner-component\"\n  class=\"{{ config?.size }}\"\n  id=\"{{ config?.id }}\"\n  [ngClass]=\"{\n    rounded: config?.rounded,\n    information: config?.type === 'info',\n    success: config?.type === 'success',\n    warning: config?.type === 'warning',\n    critical: config?.type === 'critical'\n  }\"\n>\n  <div class=\"banner-container\">\n    <div\n      class=\"banner-left\"\n      *ngIf=\"config?.type !== 'generic' && config?.type\"\n    >\n      <ng-container [ngSwitch]=\"config?.type\">\n        <div *ngSwitchCase=\"'critical'\">\n          <i class=\"fa-circle-exclamation fa-light banner-icon\"></i>\n        </div>\n        <div *ngSwitchCase=\"'success'\">\n          <i class=\"fa-circle-check fa-light banner-icon\"></i>\n        </div>\n        <div *ngSwitchCase=\"'info'\">\n          <i class=\"fa-circle-info fa-light banner-icon\"></i>\n        </div>\n        <div *ngSwitchCase=\"'warning'\">\n          <i class=\"fa-triangle-exclamation fa-light banner-icon\"></i>\n        </div>\n      </ng-container>\n      <div\n        class=\"banner-line\"\n        [ngClass]=\"{ hidden: !lineVisible }\"\n      ></div>\n    </div>\n    <div class=\"banner-right\">\n      <div class=\"banner-body\">\n        <div\n          class=\"banner-text\"\n          id=\"{{ textId }}\"\n        >\n          <div\n            class=\"banner-title h6 emphasis\"\n            *ngIf=\"config?.title\"\n          >\n            {{ config?.title || '' | translate }}\n          </div>\n          <div\n            class=\"banner-content\"\n            [innerHTML]=\"config?.content || '' | translate\"\n            *ngIf=\"config?.content\"\n          ></div>\n        </div>\n      </div>\n      <div\n        class=\"banner-ctas\"\n        *ngIf=\"config?.cta\"\n      >\n        <ng-container *ngFor=\"let cta of config?.cta; let index = index\">\n          <ircc-cl-lib-button\n            *ngIf=\"cta?.type === 'button'\"\n            [id]=\"'cta_' + index\"\n            [category]=\"cta?.btnConfig?.category\"\n            [color]=\"cta?.btnConfig?.color\"\n            [ariaLabel]=\"cta?.btnConfig?.ariaLabel\"\n            [disabled]=\"cta?.btnConfig?.disabled\"\n            [icon]=\"cta?.btnConfig?.icon\"\n            [iconDirection]=\"cta?.btnConfig?.iconDirection\"\n            >{{ cta.text | translate }}</ircc-cl-lib-button\n          >\n          <a\n            class=\"cta-link\"\n            *ngIf=\"cta?.type === 'link'\"\n            [routerLink]=\"cta?.linkConfig | translate\"\n            [attr.aria-label]=\"cta?.ariaLabel\"\n            >{{ cta.text | translate }}</a\n          >\n        </ng-container>\n      </div>\n    </div>\n  </div>\n  <div class=\"banner-btn\">\n    <ircc-cl-lib-icon-button\n      [ariaLabel]=\"config?.ariaDissmissible || '' | translate\"\n      size=\"extraSmall\"\n      class=\"banner-close\"\n      *ngIf=\"config?.dismissible\"\n      [config]=\"iconConfig\"\n      (clickEvent)=\"eventHandler($event)\"\n    ></ircc-cl-lib-icon-button>\n  </div>\n</div>\n" }]
+        }], propDecorators: { config: [{
+                type: Input
+            }], id: [{
+                type: Input
+            }], title: [{
+                type: Input
+            }], content: [{
+                type: Input
+            }], type: [{
+                type: Input
+            }], rounded: [{
+                type: Input
+            }], dismissible: [{
+                type: Input
+            }], cta: [{
+                type: Input
+            }], size: [{
+                type: Input
+            }], ariaDissmissible: [{
+                type: Input
+            }], btnEvent: [{
+                type: Output
+            }] } });
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYmFubmVyLmNvbXBvbmVudC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uLy4uLy4uL2NvbXBvbmVudC1saWIvc3JjL2xpYi9iYW5uZXItY29tcG9uZW50L2Jhbm5lci9iYW5uZXIuY29tcG9uZW50LnRzIiwiLi4vLi4vLi4vLi4vLi4vLi4vY29tcG9uZW50LWxpYi9zcmMvbGliL2Jhbm5lci1jb21wb25lbnQvYmFubmVyL2Jhbm5lci5jb21wb25lbnQuaHRtbCJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxPQUFPLEVBQUUsU0FBUyxFQUFFLFlBQVksRUFBRSxLQUFLLEVBQVUsTUFBTSxFQUFFLE1BQU0sZUFBZSxDQUFDOzs7Ozs7O0FBTy9FLE1BQU0sQ0FBTixJQUFZLFVBT1g7QUFQRCxXQUFZLFVBQVU7SUFDcEIsbUJBQU8sQ0FBQTtJQUNQLGlDQUFtQixDQUFBO0lBQ25CLDJCQUFhLENBQUE7SUFDYixtQ0FBcUIsQ0FBQTtJQUNyQixpQ0FBbUIsQ0FBQTtJQUNuQixpQ0FBbUIsQ0FBQTtBQUNyQixDQUFDLEVBUFcsVUFBVSxLQUFWLFVBQVUsUUFPckI7QUFFRCxNQUFNLENBQU4sSUFBWSxVQUdYO0FBSEQsV0FBWSxVQUFVO0lBQ3BCLDZCQUFlLENBQUE7SUFDZiw2QkFBZSxDQUFBO0FBQ2pCLENBQUMsRUFIVyxVQUFVLEtBQVYsVUFBVSxRQUdyQjtBQUVELE1BQU0sQ0FBTixJQUFZLE9BR1g7QUFIRCxXQUFZLE9BQU87SUFDakIsd0JBQWEsQ0FBQTtJQUNiLDRCQUFpQixDQUFBO0FBQ25CLENBQUMsRUFIVyxPQUFPLEtBQVAsT0FBTyxRQUdsQjtBQTBCRCxNQUFNLE9BQU8sZUFBZTtJQUo1QjtRQUtFLGdCQUFXLEdBQUcsSUFBSSxDQUFDO1FBQ25CLFdBQU0sR0FBRyxFQUFFLENBQUM7UUFFSCxXQUFNLEdBQWtCO1lBQy9CLEVBQUUsRUFBRSxFQUFFO1NBQ1AsQ0FBQztRQVdRLGFBQVEsR0FBRyxJQUFJLFlBQVksRUFB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Qjs4QkFPckIsTUFBTTtzQkFBZCxLQUFLO2dCQUdHLEVBQUU7c0JBQVYsS0FBSztnQkFDRyxLQUFLO3NCQUFiLEtBQUs7Z0JBQ0csT0FBTztzQkFBZixLQUFLO2dCQUNHLElBQUk7c0JBQVosS0FBSztnQkFDRyxPQUFPO3NCQUFmLEtBQUs7Z0JBQ0csV0FBVztzQkFBbkIsS0FBSztnQkFDRyxHQUFHO3NCQUFYLEtBQUs7Z0JBQ0csSUFBSTtzQkFBWixLQUFLO2dCQUNHLGdCQUFnQjtzQkFBeEIsS0FBSztnQkFFSSxRQUFRO3NCQUFqQixNQUFNIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgQ29tcG9uZW50LCBFdmVudEVtaXR0ZXIsIElucHV0LCBPbkluaXQsIE91dHB1dCB9IGZyb20gJ0Bhbmd1bGFyL2NvcmUnO1xuaW1wb3J0IHtcbiAgSUljb25CdXR0b25Db21wb25lbnRDb25maWcsXG4gIElJY29uQnV0dG9uSWNvbkNvbmZpZ1xufSBmcm9tICcuLi8uLi9zaGFyZWQvaWNvbi1idXR0b24vaWNvbi1idXR0b24uY29tcG9uZW50JztcbmltcG9ydCB7IElCdXR0b25Db25maWcgfSBmcm9tICcuLi8uLi9zaGFyZWQvYnV0dG9uL2J1dHRvbi5jb21wb25lbnQnO1xuXG5leHBvcnQgZW51bSBCYW5uZXJUeXBlIHtcbiAgJycgPSAnJyxcbiAgZ2VuZXJpYyA9ICdnZW5lcmljJyxcbiAgaW5mbyA9ICdpbmZvJyxcbiAgY3JpdGljYWwgPSAnY3JpdGljYWwnLFxuICBzdWNjZXNzID0gJ3N1Y2Nlc3MnLFxuICB3YXJuaW5nID0gJ3dhcm5pbmcnXG59XG5cbmV4cG9ydCBlbnVtIEJhbm5lclNpemUge1xuICBsYXJnZSA9ICdsYXJnZScsXG4gIHNtYWxsID0gJ3NtYWxsJ1xufVxuXG5leHBvcnQgZW51bSBDVEFUeXBlIHtcbiAgbGluayA9ICdsaW5rJyxcbiAgYnV0dG9uID0gJ2J1dHRvbidcbn1cblxuZXhwb3J0IGludGVyZmFjZSBJQ1RBQ29uZmlnIHtcbiAgdGV4dDogc3RyaW5nO1xuICB0eXBlOiBrZXlvZiB0eXBlb2YgQ1RBVHlwZTtcbiAgbGlua0NvbmZpZz86IGFueTsgLy9UTy1ETzogYnVpbGQgbGluayBjb21wb25lbnQgYW5kIHJlcGxhY2UgdHlwZSBhbnkgd2l0aCBJTGlua0NvbmZpZyBpbnRlcmZhY2UuIEZvciBub3cgd2lsbCB0YWtlIHVybC5cbiAgYnRuQ29uZmlnPzogSUJ1dHRvbkNvbmZpZztcbiAgYXJpYUxhYmVsPzogc3RyaW5nO1xufVxuXG5leHBvcnQgaW50ZXJmYWNlIElCYW5uZXJDb25maWcge1xuICBpZDogc3RyaW5nO1xuICB0aXRsZT86IHN0cmluZztcbiAgY29udGVudD86IHN0cmluZztcbiAgdHlwZT86IGtleW9mIHR5cGVvZiBCYW5uZXJUeXBlO1xuICByb3VuZGVkPzogYm9vbGVhbjtcbiAgZGlzbWlzc2libGU/OiBib29sZWFuO1xuICBjdGE/OiBJQ1RBQ29uZmlnW107XG4gIHNpemU/OiBrZXlvZiB0eXBlb2YgQmFubmVyU2l6ZTtcbiAgYXJpYURpc3NtaXNzaWJsZT86IHN0cmluZztcbn1cblxuQENvbXBvbmVudCh7XG4gIHNlbGVjdG9yOiAnaXJjYy1jbC1saWItYmFubmVyJyxcbiAgdGVtcGxhdGVVcmw6ICcuL2Jhbm5lci5jb21wb25lbnQuaHRtbCdcbn0pXG5leHBvcnQgY2xhc3MgQmFubmVyQ29tcG9uZW50IGltcGxlbWVudHMgT25Jbml0IHtcbiAgbGluZVZpc2libGUgPSB0cnVlO1xuICB0ZXh0SWQgPSAnJztcblxuICBASW5wdXQoKSBjb25maWc6IElCYW5uZXJDb25maWcgPSB7XG4gICAgaWQ6ICcnXG4gIH07XG4gIEBJbnB1dCgpIGlkPzogc3RyaW5nO1xuICBASW5wdXQoKSB0aXRsZT86IHN0cmluZztcbiAgQElucHV0KCkgY29udGVudD86IHN0cmluZztcbiAgQElucHV0KCkgdHlwZT86IGtleW9mIHR5cGVvZiBCYW5uZXJUeXBlO1xuICBASW5wdXQoKSByb3VuZGVkPzogYm9vbGVhbjtcbiAgQElucHV0KCkgZGlzbWlzc2libGU/OiBib29sZWFuO1xuICBASW5wdXQoKSBjdGE/OiBJQ1RBQ29uZmlnW107XG4gIEBJbnB1dCgpIHNpemU/OiBrZXlvZiB0eXBlb2YgQmFubmVyU2l6ZTtcbiAgQElucHV0KCkgYXJpYURpc3NtaXNzaWJsZT86IHN0cmluZztcblxuICBAT3V0cHV0KCkgYnRuRXZlbnQgPSBuZXcgRXZlbnRFbWl0dGVyKCk7XG5cbiAgaWNvbkNvbmZpZzogSUljb25CdXR0b25Db21wb25lbnRDb25maWcgPSB7XG4gICAgaWQ6ICcnLCAvL2lkIGlzIHNldCBpbiBuZ09uSW5pdFxuICAgIGNhdGVnb3J5OiAnY3VzdG9tJyxcbiAgICBpY29uOiB7XG4gICAgICBjbGFzczogJ2ZhLXNvbGlkIGZhLXhtYXJrJyxcbiAgICAgIGNvbG9yOiAndmFyKC0tdGV4dC1wcmltYXJ5KSdcbiAgICB9XG4gIH07XG5cbiAgZXZlbnRIYW5kbGVyKGVtaXRWYWx1ZTogc3RyaW5nKSB7XG4gICAgY29uc29sZS5sb2coZW1pdFZhbHVlKTtcbiAgICBpZiAodGhpcy5jb25maWc/LmlkKSB7XG4gICAgICBsZXQgYmFubmVyID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQodGhpcy5jb25maWc/LmlkKTtcbiAgICAgIGJhbm5lcj8uY2xhc3NMaXN0LmFkZCgnYmFubmVyRGlzbWlzc2VkJyk7XG4gICAgICBzZXRUaW1lb3V0KGZ1bmN0aW9uICgpIHtcbiAgICAgICAgYmFubmVyPy5jbGFzc0xpc3QuYWRkKCdub0Rpc3BsYXknKTtcbiAgICAgICAgYmFubmVyPy5jbGFzc0xpc3QucmVtb3ZlKCdiYW5uZXJEaXNtaXNzZWQnKTtcbiAgICAgIH0sIDcwMCk7XG4gICAgICB0aGlzLmJ0bkV2ZW50Py5lbWl0KHRoaXMuY29uZmlnLmlkKTtcbiAgICAgIGJhbm5lcj8uY2xhc3NMaXN0LnJlbW92ZSgnbm9EaXNwbGF5Jyk7XG4gICAgfVxuICB9XG5cbiAgdG9nZ2xlTGluZSgpIHtcbiAgICBsZXQgY29udGFpbmVySGVpZ2h0ID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQodGhpcy50ZXh0SWQpPy5vZmZzZXRIZWlnaHQ7XG4gICAgbGV0IGVsOiBhbnkgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGAjJHt0aGlzLmNvbmZpZz8uaWR9IC5iYW5uZXItbGluZWApO1xuICAgIGxldCBjdGFzOiBhbnkgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGAjJHt0aGlzLmNvbmZpZz8uaWR9IC5iYW5uZXItY3Rhc2ApO1xuICAgIGlmIChcbiAgICAgIChjb250YWluZXJIZWlnaHQgJiYgZWwgJiYgY29udGFpbmVySGVpZ2h0ID4gMzUpIHx8XG4gICAgICAoZWwgJiYgY29udGFpbmVySGVpZ2h0ICYmIGNvbnRhaW5lckhlaWdodCA+IDIzICYmIGN0YXMpXG4gICAgKSB7XG4gICAgICBlbC5zdHlsZS5kaXNwbGF5ID0gJ2Jsb2NrJztcbiAgICB9IGVsc2UgaWYgKGVsKSB7XG4gICAgICBlbC5zdHlsZS5kaXNwbGF5ID0gJ25vbmUnO1xuICAgIH1cbiAgfVxuXG4gIG5nT25Jbml0KCkge1xuICAgIC8vc2V0IGNvbmZpZyBmcm9tIGluZGl2aWR1YWwgb3B0aW9ucywgaWYgcHJlc2VudFxuICAgIGlmICh0aGlzLmlkKSB0aGlzLmNvbmZpZy5pZCA9IHRoaXMuaWQ7XG4gICAgaWYgKHRoaXMudGl0bGUpIHRoaXMuY29uZmlnLnRpdGxlID0gdGhpcy50aXRsZTtcbiAgICBpZiAodGhpcy5jb250ZW50KSB0aGlzLmNvbmZpZy5jb250ZW50ID0gdGhpcy5jb250ZW50O1xuICAgIGlmICh0aGlzLnR5cGUpIHRoaXMuY29uZmlnLnR5cGUgPSB0aGlzLnR5cGU7XG4gICAgaWYgKHRoaXMucm91bmRlZCkgdGhpcy5jb25maWcucm91bmRlZCA9IHRoaXMucm91bmRlZDtcbiAgICBpZiAodGhpcy5kaXNtaXNzaWJsZSkgdGhpcy5jb25maWcuZGlzbWlzc2libGUgPSB0aGlzLmRpc21pc3NpYmxlO1xuICAgIGlmICh0aGlzLmN0YSkgdGhpcy5jb25maWcuY3RhID0gdGhpcy5jdGE7XG4gICAgaWYgKHRoaXMuc2l6ZSkgdGhpcy5jb25maWcuc2l6ZSA9IHRoaXMuc2l6ZTtcbiAgICBpZiAodGhpcy5hcmlhRGlzc21pc3NpYmxlKSB0aGlzLmNvbmZpZy5hcmlhRGlzc21pc3NpYmxlID0gdGhpcy5hcmlhRGlzc21pc3NpYmxlO1xuXG4gICAgdGhpcy5pY29uQ29uZmlnLmlkID0gdGhpcy5jb25maWc/LmlkICsgJ19jbG9zZUJ0bic7XG4gICAgdGhpcy50ZXh0SWQgPSB0aGlzLmNvbmZpZz8uaWQgKyAnX3RleHQnO1xuXG4gICAgaWYgKHRoaXMuY29uZmlnPy5jdGEpIHtcbiAgICAgIHRoaXMuY29uZmlnPy5jdGEuZm9yRWFjaCgoaXRlbSkgPT4ge1xuICAgICAgICBpZiAoaXRlbS5hcmlhTGFiZWwgJiYgaXRlbS5idG5Db25maWcpXG4gICAgICAgICAgaXRlbS5idG5Db25maWcuYXJpYUxhYmVsID0gaXRlbS5hcmlhTGFiZWw7XG4gICAgICB9KTtcbiAgICB9XG5cblxuICAgIGlmICghdGhpcy5jb25maWcuYXJpYURpc3NtaXNzaWJsZSB8fCB0aGlzLmNvbmZpZy5hcmlhRGlzc21pc3NpYmxlID09PSAnJykge1xuICAgICAgaWYgKHRoaXMuY29uZmlnLmRpc21pc3NpYmxlKSB7XG4gICAgICAgIHRoaXMuY29uZmlnLmFyaWFEaXNzbWlzc2libGUgPSAnY2xvc2UnO1xuICAgICAgfVxuICAgIH1cbiAgfVxuXG4gIG5nQWZ0ZXJWaWV3SW5pdCgpIHtcbiAgICB0aGlzLnRvZ2dsZUxpbmUoKTtcbiAgfVxuXG4gIG5nQWZ0ZXJWaWV3Q2hlY2tlZCgpIHtcbiAgICB0aGlzLnRvZ2dsZUxpbmUoKTtcbiAgfVxufVxuIiwiPGRpdlxuICAod2luZG93OnJlc2l6ZSk9XCJ0b2dnbGVMaW5lKClcIlxuICBjbGFzcz1cImJhbm5lci1jb21wb25lbnRcIlxuICBjbGFzcz1cInt7IGNvbmZpZz8uc2l6ZSB9fVwiXG4gIGlkPVwie3sgY29uZmlnPy5pZCB9fVwiXG4gIFtuZ0NsYXNzXT1cIntcbiAgICByb3VuZGVkOiBjb25maWc/LnJvdW5kZWQsXG4gICAgaW5mb3JtYXRpb246IGNvbmZpZz8udHlwZSA9PT0gJ2luZm8nLFxuICAgIHN1Y2Nlc3M6IGNvbmZpZz8udHlwZSA9PT0gJ3N1Y2Nlc3MnLFxuICAgIHdhcm5pbmc6IGNvbmZpZz8udHlwZSA9PT0gJ3dhcm5pbmcnLFxuICAgIGNyaXRpY2FsOiBjb25maWc/LnR5cGUgPT09ICdjcml0aWNhbCdcbiAgfVwiXG4+XG4gIDxkaXYgY2xhc3M9XCJiYW5uZXItY29udGFpbmVyXCI+XG4gICAgPGRpdlxuICAgICAgY2xhc3M9XCJiYW5uZXItbGVmdFwiXG4gICAgICAqbmdJZj1cImNvbmZpZz8udHlwZSAhPT0gJ2dlbmVyaWMnICYmIGNvbmZpZz8udHlwZVwiXG4gICAgPlxuICAgICAgPG5nLWNvbnRhaW5lciBbbmdTd2l0Y2hdPVwiY29uZmlnPy50eXBlXCI+XG4gICAgICAgIDxkaXYgKm5nU3dpdGNoQ2FzZT1cIidjcml0aWNhbCdcIj5cbiAgICAgICAgICA8aSBjbGFzcz1cImZhLWNpcmNsZS1leGNsYW1hdGlvbiBmYS1saWdodCBiYW5uZXItaWNvblwiPjwvaT5cbiAgICAgICAgPC9kaXY+XG4gICAgICAgIDxkaXYgKm5nU3dpdGNoQ2FzZT1cIidzdWNjZXNzJ1wiPlxuICAgICAgICAgIDxpIGNsYXNzPVwiZmEtY2lyY2xlLWNoZWNrIGZhLWxpZ2h0IGJhbm5lci1pY29uXCI+PC9pPlxuICAgICAgICA8L2Rpdj5cbiAgICAgICAgPGRpdiAqbmdTd2l0Y2hDYXNlPVwiJ2luZm8nXCI+XG4gICAgICAgICAgPGkgY2xhc3M9XCJmYS1jaXJjbGUtaW5mbyBmYS1saWdodCBiYW5uZXItaWNvblwiPjwvaT5cbiAgICAgICAgPC9kaXY+XG4gICAgICAgIDxkaXYgKm5nU3dpdGNoQ2FzZT1cIid3YXJuaW5nJ1wiPlxuICAgICAgICAgIDxpIGNsYXNzPVwiZmEtdHJpYW5nbGUtZXhjbGFtYXRpb24gZmEtbGlnaHQgYmFubmVyLWljb25cIj48L2k+XG4gICAgICAgIDwvZGl2PlxuICAgICAgPC9uZy1jb250YWluZXI+XG4gICAgICA8ZGl2XG4gICAgICAgIGNsYXNzPVwiYmFubmVyLWxpbmVcIlxuICAgICAgICBbbmdDbGFzc109XCJ7IGhpZGRlbjogIWxpbmVWaXNpYmxlIH1cIlxuICAgICAgPjwvZGl2PlxuICAgIDwvZGl2PlxuICAgIDxkaXYgY2xhc3M9XCJiYW5uZXItcmlnaHRcIj5cbiAgICAgIDxkaXYgY2xhc3M9XCJiYW5uZXItYm9keVwiPlxuICAgICAgICA8ZGl2XG4gICAgICAgICAgY2xhc3M9XCJiYW5uZXItdGV4dFwiXG4gICAgICAgICAgaWQ9XCJ7eyB0ZXh0SWQgfX1cIlxuICAgICAgICA+XG4gICAgICAgICAgPGRpdlxuICAgICAgICAgICAgY2xhc3M9XCJiYW5uZXItdGl0bGUgaDYgZW1waGFzaXNcIlxuICAgICAgICAgICAgKm5nSWY9XCJjb25maWc/LnRpdGxlXCJcbiAgICAgICAgICA+XG4gICAgICAgICAgICB7eyBjb25maWc/LnRpdGxlIHx8ICcnIHwgdHJhbnNsYXRlIH19XG4gICAgICAgICAgPC9kaXY+XG4gICAgICAgICAgPGRpdlxuICAgICAgICAgICAgY2xhc3M9XCJiYW5uZXItY29udGVudFwiXG4gICAgICAgICAgICBbaW5uZXJIVE1MXT1cImNvbmZpZz8uY29udGVudCB8fCAnJyB8IHRyYW5zbGF0ZVwiXG4gICAgICAgICAgICAqbmdJZj1cImNvbmZpZz8uY29udGVudFwiXG4gICAgICAgICAgPjwvZGl2PlxuICAgICAgICA8L2Rpdj5cbiAgICAgIDwvZGl2PlxuICAgICAgPGRpdlxuICAgICAgICBjbGFzcz1cImJhbm5lci1jdGFzXCJcbiAgICAgICAgKm5nSWY9XCJjb25maWc/LmN0YVwiXG4gICAgICA+XG4gICAgICAgIDxuZy1jb250YWluZXIgKm5nRm9yPVwibGV0IGN0YSBvZiBjb25maWc/LmN0YTsgbGV0IGluZGV4ID0gaW5kZXhcIj5cbiAgICAgICAgICA8aXJjYy1jbC1saWItYnV0dG9uXG4gICAgICAgICAgICAqbmdJZj1cImN0YT8udHlwZSA9PT0gJ2J1dHRvbidcIlxuICAgICAgICAgICAgW2lkXT1cIidjdGFfJyArIGluZGV4XCJcbiAgICAgICAgICAgIFtjYXRlZ29yeV09XCJjdGE/LmJ0bkNvbmZpZz8uY2F0ZWdvcnlcIlxuICAgICAgICAgICAgW2NvbG9yXT1cImN0YT8uYnRuQ29uZmlnPy5jb2xvclwiXG4gICAgICAgICAgICBbYXJpYUxhYmVsXT1cImN0YT8uYnRuQ29uZmlnPy5hcmlhTGFiZWxcIlxuICAgICAgICAgICAgW2Rpc2FibGVkXT1cImN0YT8uYnRuQ29uZmlnPy5kaXNhYmxlZFwiXG4gICAgICAgICAgICBbaWNvbl09XCJjdGE/LmJ0bkNvbmZpZz8uaWNvblwiXG4gICAgICAgICAgICBbaWNvbkRpcmVjdGlvbl09XCJjdGE/LmJ0bkNvbmZpZz8uaWNvbkRpcmVjdGlvblwiXG4gICAgICAgICAgICA+e3sgY3RhLnRleHQgfCB0cmFuc2xhdGUgfX08L2lyY2MtY2wtbGliLWJ1dHRvblxuICAgICAgICAgID5cbiAgICAgICAgICA8YVxuICAgICAgICAgICAgY2xhc3M9XCJjdGEtbGlua1wiXG4gICAgICAgICAgICAqbmdJZj1cImN0YT8udHlwZSA9PT0gJ2xpbmsnXCJcbiAgICAgICAgICAgIFtyb3V0ZXJMaW5rXT1cImN0YT8ubGlua0NvbmZpZyB8IHRyYW5zbGF0ZVwiXG4gICAgICAgICAgICBbYXR0ci5hcmlhLWxhYmVsXT1cImN0YT8uYXJpYUxhYmVsXCJcbiAgICAgICAgICAgID57eyBjdGEudGV4dCB8IHRyYW5zbGF0ZSB9fTwvYVxuICAgICAgICAgID5cbiAgICAgICAgPC9uZy1jb250YWluZXI+XG4gICAgICA8L2Rpdj5cbiAgICA8L2Rpdj5cbiAgPC9kaXY+XG4gIDxkaXYgY2xhc3M9XCJiYW5uZXItYnRuXCI+XG4gICAgPGlyY2MtY2wtbGliLWljb24tYnV0dG9uXG4gICAgICBbYXJpYUxhYmVsXT1cImNvbmZpZz8uYXJpYURpc3NtaXNzaWJsZSB8fCAnJyB8IHRyYW5zbGF0ZVwiXG4gICAgICBzaXplPVwiZXh0cmFTbWFsbFwiXG4gICAgICBjbGFzcz1cImJhbm5lci1jbG9zZVwiXG4gICAgICAqbmdJZj1cImNvbmZpZz8uZGlzbWlzc2libGVcIlxuICAgICAgW2NvbmZpZ109XCJpY29uQ29uZmlnXCJcbiAgICAgIChjbGlja0V2ZW50KT1cImV2ZW50SGFuZGxlcigkZXZlbnQpXCJcbiAgICA+PC9pcmNjLWNsLWxpYi1pY29uLWJ1dHRvbj5cbiAgPC9kaXY+XG48L2Rpdj5cbiJdfQ==

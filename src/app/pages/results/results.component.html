@@ -1,0 +1,141 @@
+<div class="results-header">
+  <div class="header-content">
+    <h1>Your GeoMatch Results!</h1>
+    <h2 class="byline h5">
+      Based off of your selected locational preferences, professional,
+      education, and personal information the following three results are the
+      best matches for you.
+    </h2>
+  </div>
+  <div class="inline-buttons">
+    <ircc-cl-lib-button
+      [config]="buttonDownloadConfig"
+      >Download PDF</ircc-cl-lib-button
+    >
+    <ircc-cl-lib-button
+      [config]="buttonConfig"
+      >Email Results</ircc-cl-lib-button
+    >
+  </div>
+</div>
+
+<div class="result-body">
+  <div class="result">
+    <div class="img-div feature">
+      <img src="./assets/images/ottawa.jpg" />
+    </div>
+    <div class="result-content">
+      <div class="title">
+        <div class="img-div">
+          <img src="./assets/images/map.png" />
+        </div>
+        <h3 class="strong">Ottawa, ON</h3>
+      </div>
+      <div class="indicators">
+        <ircc-cl-lib-indicator
+          [config]="indicatorUrban"
+        ></ircc-cl-lib-indicator>
+        <ircc-cl-lib-indicator
+          [config]="indicatorDiverse"
+        ></ircc-cl-lib-indicator>
+        <ircc-cl-lib-indicator
+          [config]="indicatorSchools"
+        ></ircc-cl-lib-indicator>
+      </div>
+
+      <div class="content">
+        <p>
+          Ottawa is Canada's Capital in the east of southern Ontario, near the
+          city of Montréal and the U.S. border. Sitting on the Ottawa River, it
+          has at its centre Parliament Hill, with grand Victorian architecture
+          and museums such as the National Gallery of Canada.
+        </p>
+
+        <ircc-cl-lib-button
+          [config]="buttonDiscover"
+          (btnAction)="discoverOttawa($event)"
+          >Discover More</ircc-cl-lib-button
+        >
+      </div>
+    </div>
+  </div>
+
+  <div class="result">
+    <div class="img-div feature">
+      <img src="./assets/images/windsor.jpg" />
+    </div>
+    <div class="result-content">
+      <div class="title">
+        <div class="img-div">
+          <img src="./assets/images/map.png" />
+        </div>
+        <h3 class="strong h3">Windsor-Sarnia, ON</h3>
+      </div>
+      <div class="indicators">
+        <ircc-cl-lib-indicator
+          [config]="indicatorUrban"
+        ></ircc-cl-lib-indicator>
+        <ircc-cl-lib-indicator
+          [config]="indicatorDiverse"
+        ></ircc-cl-lib-indicator>
+        <ircc-cl-lib-indicator
+          [config]="indicatorSchools"
+        ></ircc-cl-lib-indicator>
+      </div>
+
+      <div class="content">
+        <p>
+          Windsor is a city across the Detroit River from the U.S. city of
+          Detroit. Its main waterfront park stretches about 5 km, from the 1929
+          Ambassador suspension bridge past the contemporary Windsor Sculpture
+          Park. Along the waterfront are the monuments dedicated to the Canadian
+          armed forces at Dieppe Gardens.
+        </p>
+        <ircc-cl-lib-button
+          [config]="buttonDiscover"
+          (btnAction)="discoverWindsor($event)"
+          >Discover More</ircc-cl-lib-button
+        >
+      </div>
+    </div>
+  </div>
+  <div class="result">
+    <div class="img-div feature">
+      <img src="./assets/images/banff.jpg" />
+    </div>
+    <div class="result-content">
+      <div class="title">
+        <div class="img-div">
+          <img src="./assets/images/map.png" />
+        </div>
+        <h3 class="strong h3">Banff-Jasper-Rocky Mountain House, AB</h3>
+      </div>
+      <div class="indicators">
+        <ircc-cl-lib-indicator
+          [config]="indicatorUrban"
+        ></ircc-cl-lib-indicator>
+        <ircc-cl-lib-indicator
+          [config]="indicatorDiverse"
+        ></ircc-cl-lib-indicator>
+        <ircc-cl-lib-indicator
+          [config]="indicatorSchools"
+        ></ircc-cl-lib-indicator>
+      </div>
+
+      <div class="content">
+        <p>
+          Banff is a resort town in the province or Alberta, located within
+          Banff National Park. The peaks of Mt. Rundle and Mt. Cascade, part of
+          the Rocky Mountains, dominate its skyline. The Surrounding 6,500 quare
+          kilometres of parkland are home to wildlife including elk and grizzly
+          bears.
+        </p>
+        <ircc-cl-lib-button
+          [config]="buttonDiscover"
+          (btnAction)="discoverBanff($event)"
+          >Discover More</ircc-cl-lib-button
+        >
+      </div>
+    </div>
+  </div>
+</div>

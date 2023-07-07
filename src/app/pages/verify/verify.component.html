@@ -1,0 +1,27 @@
+<app-card>
+  <div subheader>Please verify this is you</div>
+  <div byline>Does the data below match your information?</div>
+
+  <div cardbody class="verify-info">
+    <p>Full Name</p>
+    <h2>John Doe</h2>
+
+    <p>Country of Birth</p>
+    <h2>Taiwan</h2>
+  </div>
+
+  <div cardfooter>
+    <div class="inline-buttons">
+      <ircc-cl-lib-button
+        [config]="backButtonConfig"
+        (btnAction)="detectClickReturn($event)"
+        >No, that is not me</ircc-cl-lib-button
+      >
+      <ircc-cl-lib-button
+        [config]="buttonConfig"
+        (btnAction)="detectClick($event)"
+        >Continue</ircc-cl-lib-button
+      >
+    </div>
+  </div>
+</app-card>

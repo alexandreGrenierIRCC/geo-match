@@ -1,1 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files */
+@use "../core-library/index" as ircc-ds;
+
+@include ircc-ds.theme-init-required(
+  ircc-ds.palette-journeylab(),
+  default,
+  large
+);
+@include ircc-ds.element-styles();

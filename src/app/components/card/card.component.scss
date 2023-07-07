@@ -1,0 +1,20 @@
+.card{
+    min-height: 540px;
+    min-width: 610px;
+    border: 1px solid var(--divider);
+    border-radius: 8px;
+    text-align: center;
+    padding: 2rem;
+
+    & [class^='card-']{
+        padding-bottom: 4rem;
+    }
+
+}
+
+@media only screen and (max-width: 720px) {
+    .card {
+      max-width: 90vw !important;
+      min-width: auto;
+    }
+  }

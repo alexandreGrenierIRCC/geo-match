@@ -1,0 +1,16 @@
+
+
+app-card {
+  margin-top: 2rem;
+  display: block;
+}
+
+.inline-buttons {
+  display: grid;
+  grid-column: 50% 50%;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 1rem;
+  ircc-cl-lib-button {
+    display: inline-block;
+  }
+}

@@ -1,0 +1,33 @@
+<app-survey-shell [steps]="steps" [selectedSteps]="selected">
+
+  <app-card card>
+    
+    <div byline>Rank the following factors from one to six by dragging and dropping them. One being the most important factor for your location decision and six being the least important</div>
+  
+    <div cardbody class="drag-drop">
+      <button >Quality of Schools</button>
+      <button >Local Cultural Diversity</button>
+      <button >Climate</button>
+      <button >Region in Canada</button>
+      <button >Proximity to Internation Airports</button>
+      <button >Proximity to Nature and Tourism</button>
+    </div>
+  
+    <div cardfooter>
+      <div class="inline-buttons">
+        <ircc-cl-lib-button
+          [config]="backButtonConfig"
+          (btnAction)="detectClickReturn($event)"
+          >Back</ircc-cl-lib-button
+        >
+        <ircc-cl-lib-button
+          [config]="buttonConfig"
+          (btnAction)="detectClick($event)"
+          >Next</ircc-cl-lib-button
+        >
+      </div>
+    </div>
+  </app-card>
+
+</app-survey-shell>
+

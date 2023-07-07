@@ -1,0 +1,18 @@
+<div class="survey">
+  <div class="header">
+    <h1>Preferences Survey</h1>
+    <h2 class="h5">
+      The Following questions will assess what attributes you personnaly prefer
+      in a location.
+    </h2>
+    <h2 class="h5">
+      Answer the questions in order to generate the best possible locations
+      matches
+    </h2>
+
+    <ircc-cl-lib-progress-indicator (tabClick)="progressTabButtonEvent($event)" [config]="progressIndicator"></ircc-cl-lib-progress-indicator>
+  </div>
+
+
+  <ng-content select="[card]"></ng-content>
+</div>

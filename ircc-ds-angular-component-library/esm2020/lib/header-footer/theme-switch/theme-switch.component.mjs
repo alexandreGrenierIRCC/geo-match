@@ -1,0 +1,36 @@
+import { Component } from '@angular/core';
+import * as i0 from "@angular/core";
+export class ThemeSwitchComponent {
+    constructor(renderer) {
+        this.renderer = renderer;
+        this.isDarkTheme = false;
+        this.currentTheme = '';
+        this.previousTheme = '';
+    }
+    ngOnInit() {
+        this.darkModeQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        this.isDarkTheme = this.darkModeQuery.matches;
+        this.isDarkTheme ? this.currentTheme = 'dark' : this.currentTheme = 'light';
+        this.currentTheme === 'dark' ? this.previousTheme = 'Light' : this.previousTheme = 'Dark';
+        this.darkModeQuery.addEventListener('change', this.handleDarkModeChange.bind(this));
+    }
+    toggleTheme() {
+        this.isDarkTheme = !this.isDarkTheme;
+        this.isDarkTheme ? this.currentTheme = 'dark' : this.currentTheme = 'light';
+        this.currentTheme === 'dark' ? this.previousTheme = 'Light' : this.previousTheme = 'Dark';
+        this.renderer.setAttribute(document.documentElement, 'scheme', this.currentTheme);
+        this.darkModeQuery.removeEventListener('change', this.handleDarkModeChange.bind(this));
+    }
+    handleDarkModeChange(event) {
+        this.isDarkTheme = event.matches;
+        this.isDarkTheme ? this.currentTheme = 'dark' : this.currentTheme = 'light';
+        this.currentTheme === 'dark' ? this.previousTheme = 'Light' : this.previousTheme = 'Dark';
+    }
+}
+ThemeSwitchComponent.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.2.12", ngImport: i0, type: ThemeSwitchComponent, deps: [{ token: i0.Renderer2 }], target: i0.ɵɵFactoryTarget.Component });
+ThemeSwitchComponent.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "14.2.12", type: ThemeSwitchComponent, selector: "ircc-cl-lib-theme-switch", ngImport: i0, template: "<button\n  (click)=\"toggleTheme()\"\n  category=\"secondary\"\n  color=\"critical\"\n>\n  {{ this.previousTheme }}\n</button>\n", preserveWhitespaces: true });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.2.12", ngImport: i0, type: ThemeSwitchComponent, decorators: [{
+            type: Component,
+            args: [{ selector: 'ircc-cl-lib-theme-switch', template: "<button\n  (click)=\"toggleTheme()\"\n  category=\"secondary\"\n  color=\"critical\"\n>\n  {{ this.previousTheme }}\n</button>\n" }]
+        }], ctorParameters: function () { return [{ type: i0.Renderer2 }]; } });
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoidGhlbWUtc3dpdGNoLmNvbXBvbmVudC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uLy4uLy4uL2NvbXBvbmVudC1saWIvc3JjL2xpYi9oZWFkZXItZm9vdGVyL3RoZW1lLXN3aXRjaC90aGVtZS1zd2l0Y2guY29tcG9uZW50LnRzIiwiLi4vLi4vLi4vLi4vLi4vLi4vY29tcG9uZW50LWxpYi9zcmMvbGliL2hlYWRlci1mb290ZXIvdGhlbWUtc3dpdGNoL3RoZW1lLXN3aXRjaC5jb21wb25lbnQuaHRtbCJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxPQUFPLEVBQUUsU0FBUyxFQUFhLE1BQU0sZUFBZSxDQUFDOztBQU1yRCxNQUFNLE9BQU8sb0JBQW9CO0lBTS9CLFlBQW9CLFFBQW1CO1FBQW5CLGFBQVEsR0FBUixRQUFRLENBQVc7UUFMdkMsZ0JBQVcsR0FBRyxLQUFLLENBQUM7UUFDcEIsaUJBQVksR0FBRyxFQUFFLENBQUM7UUFDbEIsa0JBQWEsR0FBRyxFQUFFLENBQUM7SUFHdUIsQ0FBQztJQUUzQyxRQUFRO1FBQ04sSUFBSSxDQUFDLGFBQWEsR0FBRyxNQUFNLENBQUMsVUFBVSxDQUFDLDhCQUE4QixDQUFDLENBQUM7UUFDdkUsSUFBSSxDQUFDLFdBQVcsR0FBRyxJQUFJLENBQUMsYUFBYSxDQUFDLE9BQU8sQ0FBQztRQUM5QyxJQUFJLENBQUMsV0FBVyxDQUFDLENBQUMsQ0FBQyxJQUFJLENBQUMsWUFBWSxHQUFHLE1BQU0sQ0FBQyxDQUFDLENBQUMsSUFBSSxDQUFDLFlBQVksR0FBRyxPQUFPLENBQUM7UUFDNUUsSUFBSSxDQUFDLFlBQVksS0FBSyxNQUFNLENBQUMsQ0FBQyxDQUFDLElBQUksQ0FBQyxhQUFhLEdBQUcsT0FBTyxDQUFDLENBQUMsQ0FBQyxJQUFJLENBQUMsYUFBYSxHQUFHLE1BQU0sQ0FBQztRQUMxRixJQUFJLENBQUMsYUFBYSxDQUFDLGdCQUFnQixDQUFDLFFBQVEsRUFBRSxJQUFJLENBQUMsb0JBQW9CLENBQUMsSUFBSSxDQUFDLElBQUksQ0FBQyxDQUFDLENBQUM7SUFDdEYsQ0FBQztJQUVELFdBQVc7UUFDVCxJQUFJLENBQUMsV0FBVyxHQUFHLENBQUMsSUFBSSxDQUFDLFdBQVcsQ0FBQztRQUNyQyxJQUFJLENBQUMsV0FBVyxDQUFDLENBQUMsQ0FBQyxJQUFJLENBQUMsWUFBWSxHQUFHLE1BQU0sQ0FBQyxDQUFDLENBQUMsSUFBSSxDQUFDLFlBQVksR0FBRyxPQUFPLENBQUM7UUFDNUUsSUFBSSxDQUFDLFlBQVksS0FBSyxNQUFNLENBQUMsQ0FBQyxDQUFDLElBQUksQ0FBQyxhQUFhLEdBQUcsT0FBTyxDQUFDLENBQUMsQ0FBQyxJQUFJLENBQUMsYUFBYSxHQUFHLE1BQU0sQ0FBQztRQUMxRixJQUFJLENBQUMsUUFBUSxDQUFDLFlBQVksQ0FBQyxRQUFRLENBQUMsZUFBZSxFQUFFLFFBQVEsRUFBRSxJQUFJLENBQUMsWUFBWSxDQUFDLENBQUM7UUFDbEYsSUFBSSxDQUFDLGFBQWEsQ0FBQyxtQkFBbUIsQ0FBQyxRQUFRLEVBQUUsSUFBSSxDQUFDLG9CQUFvQixDQUFDLElBQUksQ0FBQyxJQUFJLENBQUMsQ0FBQyxDQUFDO0lBQ3pGLENBQUM7SUFFRCxvQkFBb0IsQ0FBQyxLQUEwQjtRQUM3QyxJQUFJLENBQUMsV0FBVyxHQUFHLEtBQUssQ0FBQyxPQUFPLENBQUM7UUFDakMsSUFBSSxDQUFDLFdBQVcsQ0FBQyxDQUFDLENBQUMsSUFBSSxDQUFDLFlBQVksR0FBRyxNQUFNLENBQUMsQ0FBQyxDQUFDLElBQUksQ0FBQyxZQUFZLEdBQUcsT0FBTyxDQUFDO1FBQzVFLElBQUksQ0FBQyxZQUFZLEtBQUssTUFBTSxDQUFDLENBQUMsQ0FBQyxJQUFJLENBQUMsYUFBYSxHQUFHLE9BQU8sQ0FBQyxDQUFDLENBQUMsSUFBSSxDQUFDLGFBQWEsR0FBRyxNQUFNLENBQUM7SUFDOUYsQ0FBQzs7a0hBNUJZLG9CQUFvQjtzR0FBcEIsb0JBQW9CLGdFQ05qQyxrSUFPQTs0RkREYSxvQkFBb0I7a0JBSmhDLFNBQVM7K0JBQ0UsMEJBQTBCIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgQ29tcG9uZW50LCBSZW5kZXJlcjIgfSBmcm9tICdAYW5ndWxhci9jb3JlJztcblxuQENvbXBvbmVudCh7XG4gIHNlbGVjdG9yOiAnaXJjYy1jbC1saWItdGhlbWUtc3dpdGNoJyxcbiAgdGVtcGxhdGVVcmw6ICcuL3RoZW1lLXN3aXRjaC5jb21wb25lbnQuaHRtbCdcbn0pXG5leHBvcnQgY2xhc3MgVGhlbWVTd2l0Y2hDb21wb25lbnQge1xuICBpc0RhcmtUaGVtZSA9IGZhbHNlO1xuICBjdXJyZW50VGhlbWUgPSAnJztcbiAgcHJldmlvdXNUaGVtZSA9ICcnO1xuICBkYXJrTW9kZVF1ZXJ5IDogYW55O1xuXG4gIGNvbnN0cnVjdG9yKHByaXZhdGUgcmVuZGVyZXI6IFJlbmRlcmVyMikge31cblxuICBuZ09uSW5pdCgpIHtcbiAgICB0aGlzLmRhcmtNb2RlUXVlcnkgPSB3aW5kb3cubWF0Y2hNZWRpYSgnKHByZWZlcnMtY29sb3Itc2NoZW1lOiBkYXJrKScpO1xuICAgIHRoaXMuaXNEYXJrVGhlbWUgPSB0aGlzLmRhcmtNb2RlUXVlcnkubWF0Y2hlcztcbiAgICB0aGlzLmlzRGFya1RoZW1lID8gdGhpcy5jdXJyZW50VGhlbWUgPSAnZGFyaycgOiB0aGlzLmN1cnJlbnRUaGVtZSA9ICdsaWdodCc7XG4gICAgdGhpcy5jdXJyZW50VGhlbWUgPT09ICdkYXJrJyA/IHRoaXMucHJldmlvdXNUaGVtZSA9ICdMaWdodCcgOiB0aGlzLnByZXZpb3VzVGhlbWUgPSAnRGFyayc7XG4gICAgdGhpcy5kYXJrTW9kZVF1ZXJ5LmFkZEV2ZW50TGlzdGVuZXIoJ2NoYW5nZScsIHRoaXMuaGFuZGxlRGFya01vZGVDaGFuZ2UuYmluZCh0aGlzKSk7XG4gIH1cblxuICB0b2dnbGVUaGVtZSgpIHtcbiAgICB0aGlzLmlzRGFya1RoZW1lID0gIXRoaXMuaXNEYXJrVGhlbWU7XG4gICAgdGhpcy5pc0RhcmtUaGVtZSA/IHRoaXMuY3VycmVudFRoZW1lID0gJ2RhcmsnIDogdGhpcy5jdXJyZW50VGhlbWUgPSAnbGlnaHQnO1xuICAgIHRoaXMuY3VycmVudFRoZW1lID09PSAnZGFyaycgPyB0aGlzLnByZXZpb3VzVGhlbWUgPSAnTGlnaHQnIDogdGhpcy5wcmV2aW91c1RoZW1lID0gJ0RhcmsnO1xuICAgIHRoaXMucmVuZGVyZXIuc2V0QXR0cmlidXRlKGRvY3VtZW50LmRvY3VtZW50RWxlbWVudCwgJ3NjaGVtZScsIHRoaXMuY3VycmVudFRoZW1lKTtcbiAgICB0aGlzLmRhcmtNb2RlUXVlcnkucmVtb3ZlRXZlbnRMaXN0ZW5lcignY2hhbmdlJywgdGhpcy5oYW5kbGVEYXJrTW9kZUNoYW5nZS5iaW5kKHRoaXMpKTtcbiAgfVxuXG4gIGhhbmRsZURhcmtNb2RlQ2hhbmdlKGV2ZW50OiBNZWRpYVF1ZXJ5TGlzdEV2ZW50KSB7XG4gICAgdGhpcy5pc0RhcmtUaGVtZSA9IGV2ZW50Lm1hdGNoZXM7XG4gICAgdGhpcy5pc0RhcmtUaGVtZSA/IHRoaXMuY3VycmVudFRoZW1lID0gJ2RhcmsnIDogdGhpcy5jdXJyZW50VGhlbWUgPSAnbGlnaHQnO1xuICAgIHRoaXMuY3VycmVudFRoZW1lID09PSAnZGFyaycgPyB0aGlzLnByZXZpb3VzVGhlbWUgPSAnTGlnaHQnIDogdGhpcy5wcmV2aW91c1RoZW1lID0gJ0RhcmsnO1xufVxufVxuIiwiPGJ1dHRvblxuICAoY2xpY2spPVwidG9nZ2xlVGhlbWUoKVwiXG4gIGNhdGVnb3J5PVwic2Vjb25kYXJ5XCJcbiAgY29sb3I9XCJjcml0aWNhbFwiXG4+XG4gIHt7IHRoaXMucHJldmlvdXNUaGVtZSB9fVxuPC9idXR0b24+XG4iXX0=

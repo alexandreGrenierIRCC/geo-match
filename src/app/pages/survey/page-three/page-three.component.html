@@ -1,0 +1,48 @@
+<app-survey-shell [steps]="steps" [selectedSteps]="selected">
+
+  <app-card card>
+    
+    <div byline>What region in Canada do you prefer? ( Choose all that apply )</div>
+  
+    <div cardbody>
+      <ircc-cl-lib-checkbox
+          [config]="checkboxAtlantic"
+        ></ircc-cl-lib-checkbox>
+      <ircc-cl-lib-checkbox
+        [config]="checkboxCentral"
+      ></ircc-cl-lib-checkbox>
+      <ircc-cl-lib-checkbox
+        [config]="checkboxPrairies"
+      ></ircc-cl-lib-checkbox>
+      <ircc-cl-lib-checkbox
+        [config]="checkboxWest"
+      ></ircc-cl-lib-checkbox>
+      <ircc-cl-lib-checkbox
+        [config]="checkboxNorth"
+      ></ircc-cl-lib-checkbox>
+      <ircc-cl-lib-checkbox
+        [config]="checkboxNo"
+      ></ircc-cl-lib-checkbox>
+      <ircc-cl-lib-checkbox
+        [config]="checkboxRegion"
+      ></ircc-cl-lib-checkbox>
+    </div>
+  
+    <div cardfooter>
+      <div class="inline-buttons">
+        <ircc-cl-lib-button
+          [config]="backButtonConfig"
+          (btnAction)="detectClickReturn($event)"
+          >Back</ircc-cl-lib-button
+        >
+        <ircc-cl-lib-button
+          [config]="buttonConfig"
+          (btnAction)="detectClick($event)"
+          >Next</ircc-cl-lib-button
+        >
+      </div>
+    </div>
+  </app-card>
+
+</app-survey-shell>
+

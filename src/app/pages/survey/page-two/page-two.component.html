@@ -1,0 +1,28 @@
+<app-survey-shell [steps]="steps" [selectedSteps]="selected">
+
+  <app-card card>
+    
+    <div byline>What Type of locality would you most prefer to live in?</div>
+  
+    <div cardbody>
+      <ircc-cl-lib-radio-input [config]="radioOne"></ircc-cl-lib-radio-input>
+    </div>
+  
+    <div cardfooter>
+      <div class="inline-buttons">
+        <ircc-cl-lib-button
+          [config]="backButtonConfig"
+          (btnAction)="detectClickReturn($event)"
+          >Back</ircc-cl-lib-button
+        >
+        <ircc-cl-lib-button
+          [config]="buttonConfig"
+          (btnAction)="detectClick($event)"
+          >Next</ircc-cl-lib-button
+        >
+      </div>
+    </div>
+  </app-card>
+
+</app-survey-shell>
+
